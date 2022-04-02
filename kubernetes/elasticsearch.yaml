@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elasticsearch
+  labels:
+    app: elasticsearch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: elasticsearch
+  template:
+    metadata:
+      labels:
+        app: elasticsearch
+    spec:
+      containers:
+        - name: elasticsearch
+          image: elasticsearch:7.7.1
+          ports:
+            - containerPort: 9200
+          env:
+            - name: "discovery.type"
+              value: "single-node"
+            - name: "bootstrap.memory_lock"
+              value: "true"
+          resources: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: elasticsearch
+spec:
+  type: ClusterIP
+  ports:
+    - port: 9200
+      protocol: TCP
+      name: http
+      targetPort: 9200
+  selector:
+    app: elasticsearch
