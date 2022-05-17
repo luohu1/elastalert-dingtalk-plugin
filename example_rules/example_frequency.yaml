@@ -17,7 +17,7 @@
 
 # (Required)
 # Rule name, must be unique
-name: Example frequency rule
+name: dingtalk
 
 # (Required)
 # Type of alert.
@@ -43,9 +43,11 @@ timeframe:
 # For more info: http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl.html
 filter:
   - term:
-      rule_name: "Example frequency rule"
+      rule_name: "dingtalk"
 
 # (Required)
 # The alert is use when a match is found
 alert:
-  - "debug"
+  - "elastalert_modules.my_alerts.DingtalkAlerter"
+
+dingtalk_webhook: "https://oapi.dingtalk.com/robot/send?access_token=862bef274df7bb92675477bb4d8d881d143c97820c5053fd3843ed7816c35038"
